@@ -44,10 +44,10 @@
         }
 
         // using EPSG:2180
-        this.projection = new MM.MercatorProjection(0,
+        this.projection = new MM.LinearProjection(0,
             MM.deriveTransformation(0, 0, 0, 0,
-                                    1000000, 0, 1, 0,
-                                    0, 1000000, 0, 1));
+                                    200000000, 0, 1, 0,
+                                    0, 200000000, 0, 1));
         //FIX ME: change tile to 256x256 !!!
         this.tileSize = new MM.Point(250, 250);
 
