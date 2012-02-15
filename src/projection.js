@@ -40,8 +40,8 @@
         },
 
         locationCoordinate: function(location) {
-            var point = new MM.Point(Math.PI * location.lon / 180.0,
-                                     Math.PI * location.lat / 180.0);
+            var point = new MM.Point(location.lon,
+                                     location.lat);
             point = this.project(point);
             return new MM.Coordinate(point.y, point.x, this.zoom);
         },
@@ -50,8 +50,8 @@
             coordinate = coordinate.zoomTo(this.zoom);
             var point = new MM.Point(coordinate.column, coordinate.row);
             point = this.unproject(point);
-            return new MM.Location(180.0 * point.y / Math.PI,
-                                   180.0 * point.x / Math.PI);
+            return new MM.Location(point.y,
+                                   point.x);
         }
     };
 

@@ -649,8 +649,8 @@ var MM = com.modestmaps = {
         },
 
         locationCoordinate: function(location) {
-            var point = new MM.Point(Math.PI * location.lon / 180.0,
-                                     Math.PI * location.lat / 180.0);
+            var point = new MM.Point(location.lon,
+                                     location.lat);
             point = this.project(point);
             return new MM.Coordinate(point.y, point.x, this.zoom);
         },
@@ -659,8 +659,8 @@ var MM = com.modestmaps = {
             coordinate = coordinate.zoomTo(this.zoom);
             var point = new MM.Point(coordinate.column, coordinate.row);
             point = this.unproject(point);
-            return new MM.Location(180.0 * point.y / Math.PI,
-                                   180.0 * point.x / Math.PI);
+            return new MM.Location(point.y,
+                                   point.x);
         }
     };
 
@@ -2282,12 +2282,13 @@ var MM = com.modestmaps = {
             this.addLayer(layerOrLayers[i]);
         }
 
-        // default to Google-y Mercator style maps
+        // using EPSG:2180
         this.projection = new MM.MercatorProjection(0,
-            MM.deriveTransformation(-Math.PI,  Math.PI, 0, 0,
-                                     Math.PI,  Math.PI, 1, 0,
-                                    -Math.PI, -Math.PI, 0, 1));
-        this.tileSize = new MM.Point(256, 256);
+            MM.deriveTransformation(0, 0, 0, 0,
+                                    1000000, 0, 1, 0,
+                                    0, 1000000, 0, 1));
+        //FIX ME: change tile to 256x256 !!!
+        this.tileSize = new MM.Point(250, 250);
 
         // default 0-18 zoom level
         // with infinite horizontal pan and clamped vertical pan
