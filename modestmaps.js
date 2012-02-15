@@ -2283,6 +2283,10 @@ var MM = com.modestmaps = {
         }
 
         // using EPSG:2180
+        // this.projection = new MM.LinearProjection(0,
+        //     MM.deriveTransformation(0, 10000000, 0, 0,
+        //                             10000000, 10000000, 1, 0,
+        //                             0, 0, 0, 1));
         this.projection = new MM.LinearProjection(0,
             MM.deriveTransformation(0, 0, 0, 0,
                                     200000000, 0, 1, 0,

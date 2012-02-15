@@ -2,14 +2,16 @@ MM.Follower = function(map, location, content, dimensions) {
     this.coord = map.locationCoordinate(location);
     this.offset = new com.modestmaps.Point(0, 0);
     this.dimensions = dimensions || new com.modestmaps.Point(100, 50);
-    this.padding = new com.modestmaps.Point(10, 10);
-    this.offset = new com.modestmaps.Point(0, -this.dimensions.y);
+    this.padding = new com.modestmaps.Point(0, 0);
+    this.offset = new com.modestmaps.Point(0, 0);
 
     var follower = this;
     var callback = function(m, a) { return follower.draw(m); };
     map.addCallback('drawn', callback);
     this.div = document.createElement('div');
     this.div.style.position = 'absolute';
+    this.div.style.border = '1px solid red';
+    this.div.style.borderWidth = '1px 0 0 1px';
     this.div.style.width = this.dimensions.x + 'px';
     this.div.style.height = this.dimensions.y + 'px';
     //this.div.style.backgroundColor = 'white';
