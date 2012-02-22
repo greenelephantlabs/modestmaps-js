@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Modest Maps JS</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="raphael.js"></script>
+    <script type="text/javascript" src="../../modestmaps.js"></script>
+    <script type="text/javascript" src="polygonmarker-raphael.js"></script>
+    <script type="text/javascript">
+      
+var mapa;
+
+function loadMap() {
+    var mapShower = new MM.MapProvider (function(coord) {
+	var img = "y="+parseInt(coord.row)+"&x="+parseInt(coord.column)+"&s="+parseInt(coord.zoom)
+	return "http://titan.mapnet.pl:8001/maps/mapnik?"+img;
+	
+    });
+    var firstLayer = new MM.Layer(mapShower);
+    mapa = new MM.Map('mapDiv', firstLayer, new MM.Point(640,480));
+    mapa.setCenterZoom(new MM.Location(103015581,127571413),3);
+    renderTrace();
+
+}
+
+function renderTrace() {
+    // lista punktow - prawdziwa lista zwrocona przez
+    // GetRoute, ale ja przepisalem punktu recznie tutaj:
+    // var coords = [[127599793,103010140],
+    //               [127566437,103021993],
+    //               [127558267,103009945],
+    //               [127554305,103001840],
+    //               [127559528,102999703],
+    //               [127562852,103008250],
+    //               [127569499,103014660]];
+
+    //kwadrat:
+    var coords = [[127600026, 103010795],
+                  [127631471, 103044389],
+                  [127579909, 103062163],
+                  [127571413, 103015581],
+                  [127600026, 103010795]];
+
+    var arrayPoints = [];
+    for (var i = 0; i < coords.length; i++) {
+        var X = coords[i][0];
+        var Y = coords[i][1];
+
+        var point = new MM.Location(Y,X);
+        console.log(point);
+        // push dodaje element do listy
+        arrayPoints.push(point);
+    }
+
+    var trasa = new MM.PolygonMarker(mapa, arrayPoints, '#FF0000', 1.0, '#FF0000');
+    trasa.draw();
+    console.log(trasa);
+    
+}
+
+
+    </script>
+  </head>
+  <body onload="loadMap()">
+
+    <div id="mapDiv"></div>
+    
+  </body>
+</html>
