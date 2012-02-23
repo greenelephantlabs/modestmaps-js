@@ -20,19 +20,19 @@
 </div>
 <p>The above div is a map initialized like so:</p>
 <pre id="src">
-// "import" the namespace
-var MM = com.modestmaps;
-
-var provider = new MM.MapProvider(function(coord) {
-    var img = parseInt(coord.zoom) +'-r'+ parseInt(coord.row) +'-c'+ parseInt(coord.column) + '.jpg';
-    return 'http://osm-bayarea.s3.amazonaws.com/' + img;
-});
+var layer = new MM.Layer(new MM.MapProvider(function(coord) {
+    var img = parseInt(coord.zoom) +'-r'+ parseInt(coord.row) +'-c'+
+    parseInt(coord.column) + '.jpg';
+    var img = "y="+parseInt(coord.row)+"&x="+parseInt(coord.column)+"&s="+parseInt(coord.zoom)
+return "http://titan.mapnet.pl:8001/maps/mapnik?"+img;
+}));
 
 map = new MM.Map('map', provider, new MM.Point(900,900))
 
-var f = new MM.Follower(map, new MM.Location(37.811530, -122.2666097), '&#xB0; Broadway and Grand');
+var f = new MM.Follower(map, new MM.Location(102988251, 127686899), 'Warszawa');
+//var f = new MM.Follower(map, new MM.Location(200000000, 0), 'Warszawa');
 
-map.setCenterZoom(new MM.Location(37.811530, -122.2666097), 14);
+map.setCenterZoom(new MM.Location(0,0), 1);
 </pre>
 <p>Hands up who wants overlays?</p>
 <div id="log"></div>

@@ -33,6 +33,33 @@
             this.parent.style.position = 'relative';
         }
 
+        this.layers = [];
+        if(!(layerOrLayers instanceof Array)) {
+            layerOrLayers = [ layerOrLayers ];
+        }
+
+        for (var i = 0; i < layerOrLayers.length; i++) {
+            this.addLayer(layerOrLayers[i]);
+        }
+
+        // using EPSG:2180
+        this.projection = new MM.MercatorProjection(0,
+            MM.deriveTransformation(0, 0, 0, 0,
+                                    1000000, 0, 1, 0,
+                                    0, 1000000, 0, 1));
+        //FIX ME: change tile to 256x256 !!!
+        this.tileSize = new MM.Point(250, 250);
+
+        // default 0-18 zoom level
+        // with infinite horizontal pan and clamped vertical pan
+        this.coordLimits = [
+            new MM.Coordinate(0,-Infinity,0),           // top left outer
+            new MM.Coordinate(1,Infinity,0).zoomTo(18) // bottom right inner
+        ];
+
+        // eyes towards null island
+        this.coordinate = new MM.Coordinate(0.5, 0.5, 0);
+
         // if you don't specify dimensions we assume you want to fill the parent
         // unless the parent has no w/h, in which case we'll still use a default
         if (!dimensions) {
