@@ -5,11 +5,22 @@
 <script type="text/javascript" src="../../modestmaps.js"></script>
 <script type="text/javascript" src="follower.js"></script>
 <script type="text/javascript">
-    var map;
-    function initMap() {
-        var src = document.getElementById('src');
-        eval(src.textContent || src.innerText);
-    }
+var map;
+function initMap() {
+    var layer = new MM.Layer(new MM.MapProvider(function(coord) {
+        var img = parseInt(coord.zoom) +'-r'+ parseInt(coord.row) +'-c'+
+            parseInt(coord.column) + '.jpg';
+        var img = "y="+parseInt(coord.row)+"&x="+parseInt(coord.column)+"&s="+parseInt(coord.zoom)
+        return "http://titan.mapnet.pl:8001/maps/mapnik?"+img;
+    }));
+    
+    map = new MM.Map('map', layer, new MM.Point(900,900))
+
+    var f = new MM.Follower(map, new MM.Location(95312673,  145844356), 'Gliwice');
+    var f = new MM.Follower(map, new MM.Location(102988251, 127686899), 'Warszawa');
+
+    map.setCenterZoom(new MM.Location(0,0), 1);
+}
 </script>
 </head>
 <body onload="initMap()">
@@ -17,24 +28,6 @@
 <p><a href="javascript:map.zoomIn()">zoom in</a> | <a href="javascript:map.zoomOut()">zoom out</a>
 <br><a href="javascript:map.panLeft()">pan left</a> | <a href="javascript:map.panRight()">pan right</a> | <a href="javascript:map.panDown()">pan down</a> | <a href="javascript:map.panUp()">pan up</a></p>
 <div id="map">
-</div>
-<p>The above div is a map initialized like so:</p>
-<pre id="src">
-var layer = new MM.Layer(new MM.MapProvider(function(coord) {
-    var img = parseInt(coord.zoom) +'-r'+ parseInt(coord.row) +'-c'+
-    parseInt(coord.column) + '.jpg';
-    var img = "y="+parseInt(coord.row)+"&x="+parseInt(coord.column)+"&s="+parseInt(coord.zoom)
-return "http://titan.mapnet.pl:8001/maps/mapnik?"+img;
-}));
-
-map = new MM.Map('map', provider, new MM.Point(900,900))
-
-var f = new MM.Follower(map, new MM.Location(102988251, 127686899), 'Warszawa');
-//var f = new MM.Follower(map, new MM.Location(200000000, 0), 'Warszawa');
-
-map.setCenterZoom(new MM.Location(0,0), 1);
-</pre>
-<p>Hands up who wants overlays?</p>
 <div id="log"></div>
 </body>
 </html>
