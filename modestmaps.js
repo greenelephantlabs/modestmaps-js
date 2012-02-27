@@ -495,8 +495,8 @@ if (!com) {
         },
 
         locationCoordinate: function(location) {
-            var point = new MM.Point(Math.PI * location.lon / 180.0,
-                                     Math.PI * location.lat / 180.0);
+            var point = new MM.Point(location.lon,
+                                     location.lat);
             point = this.project(point);
             return new MM.Coordinate(point.y, point.x, this.zoom);
         },
@@ -505,8 +505,8 @@ if (!com) {
             coordinate = coordinate.zoomTo(this.zoom);
             var point = new MM.Point(coordinate.column, coordinate.row);
             point = this.unproject(point);
-            return new MM.Location(180.0 * point.y / Math.PI,
-                                   180.0 * point.x / Math.PI);
+            return new MM.Location(point.y,
+                                   point.x);
         }
     };
 
@@ -558,14 +558,14 @@ if (!com) {
 
     MM.MapProvider.prototype = {
         // defaults to Google-y Mercator style maps
-        projection: new MM.MercatorProjection( 0, 
-                        MM.deriveTransformation(-Math.PI,  Math.PI, 0, 0, 
-                                                 Math.PI,  Math.PI, 1, 0, 
-                                                -Math.PI, -Math.PI, 0, 1) ),
+        projection: new MM.LinearProjection( 0, 
+                        MM.deriveTransformation(0,0, 0, 0, 
+                                                200000000, 0, 1, 0, 
+                                                0, 200000000, 0, 1) ),
                     
-        tileWidth: 256,
-        tileHeight: 256,
-        
+        tileWidth: 250,
+        tileHeight: 250,
+
         // these are limits for available *tiles*
         // panning limits will be different (since you can wrap around columns)
         // but if you put Infinity in here it will screw up sourceCoordinate
