@@ -10,7 +10,7 @@
 
     MM.MapProvider.prototype = {
         // defaults to Google-y Mercator style maps
-        projection: new MM.MercatorProjection( 0, 
+        projection: new MM.LinearProjection( 0, 
                         MM.deriveTransformation(0,0, 0, 0, 
                                                 200000000, 0, 1, 0, 
                                                 0, 200000000, 0, 1) ),
