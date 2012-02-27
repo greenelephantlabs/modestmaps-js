@@ -11,13 +11,13 @@
     MM.MapProvider.prototype = {
         // defaults to Google-y Mercator style maps
         projection: new MM.MercatorProjection( 0, 
-                        MM.deriveTransformation(-Math.PI,  Math.PI, 0, 0, 
-                                                 Math.PI,  Math.PI, 1, 0, 
-                                                -Math.PI, -Math.PI, 0, 1) ),
+                        MM.deriveTransformation(0,0, 0, 0, 
+                                                200000000, 0, 1, 0, 
+                                                0, 200000000, 0, 1) ),
                     
-        tileWidth: 256,
-        tileHeight: 256,
-        
+        tileWidth: 250,
+        tileHeight: 250,
+
         // these are limits for available *tiles*
         // panning limits will be different (since you can wrap around columns)
         // but if you put Infinity in here it will screw up sourceCoordinate
